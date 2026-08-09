@@ -11,7 +11,7 @@ const floatingCards = [
     title: 'Incoming Call',
     subtitle: 'Sarah Mitchell',
     detail: 'Hair Appointment',
-    color: '#FF7A00',
+    color: '#2563EB',
     position: 'top-[8%] left-[3%] lg:left-[5%]',
     delay: 0.8,
   },
@@ -20,7 +20,7 @@ const floatingCards = [
     title: 'Appointment Booked',
     subtitle: 'Tomorrow, 2:00 PM',
     detail: 'Dental Cleaning',
-    color: '#FFA733',
+    color: '#7C3AED',
     position: 'top-[15%] right-[3%] lg:right-[5%]',
     delay: 1.0,
   },
@@ -29,7 +29,7 @@ const floatingCards = [
     title: 'Calls Today',
     subtitle: '147 answered',
     detail: '99.2% success rate',
-    color: '#FFD580',
+    color: '#0284C7',
     position: 'bottom-[20%] left-[3%] lg:left-[8%]',
     delay: 1.2,
   },
@@ -38,7 +38,7 @@ const floatingCards = [
     title: 'Revenue Saved',
     subtitle: '$12,450',
     detail: 'This month',
-    color: '#FF7A00',
+    color: '#10B981',
     position: 'bottom-[15%] right-[3%] lg:right-[8%]',
     delay: 1.4,
   },
@@ -122,26 +122,26 @@ export default function Hero() {
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(255,122,0,0.08) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(37,99,235,0.15) 0%, rgba(124,58,237,0.08) 40%, transparent 70%)',
             filter: 'blur(60px)',
           }}
         />
         {/* Animated grid */}
         <div
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute inset-0 opacity-[0.04]"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(12,74,110,0.05) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(12,74,110,0.05) 1px, transparent 1px)
+              linear-gradient(rgba(37,99,235,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(37,99,235,0.1) 1px, transparent 1px)
             `,
             backgroundSize: '60px 60px',
           }}
         />
         {/* Top light ray */}
         <motion.div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-[300px]"
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-[300px]"
           style={{
-            background: 'linear-gradient(to bottom, rgba(255,122,0,0.4), transparent)',
+            background: 'linear-gradient(to bottom, rgba(124,58,237,0.5), transparent)',
           }}
           initial={{ opacity: 0, scaleY: 0 }}
           animate={{ opacity: 1, scaleY: 1 }}
@@ -161,10 +161,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,122,0,0.08)] border border-[rgba(255,122,0,0.15)] mb-8"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(56,189,248,0.1)] border border-[rgba(56,189,248,0.25)] mb-8"
         >
-          <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-          <span className="text-xs font-medium text-accent-secondary tracking-wide">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+          <span className="text-xs font-medium text-cyan-300 tracking-wide">
             Your 24/7 AI Employee
           </span>
         </motion.div>

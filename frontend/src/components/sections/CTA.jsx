@@ -13,14 +13,14 @@ export default function CTA() {
           <motion.div
             className="absolute inset-0 rounded-[40px]"
             style={{
-              background: 'radial-gradient(ellipse at 30% 50%, rgba(255,122,0,0.12) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(255,167,51,0.08) 0%, transparent 60%)',
-              filter: 'blur(40px)',
+              background: 'radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.2) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(124,58,237,0.16) 0%, transparent 60%)',
+              filter: 'blur(50px)',
             }}
             animate={{
               background: [
-                'radial-gradient(ellipse at 30% 50%, rgba(255,122,0,0.12) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(255,167,51,0.08) 0%, transparent 60%)',
-                'radial-gradient(ellipse at 70% 50%, rgba(255,122,0,0.12) 0%, transparent 60%), radial-gradient(ellipse at 30% 50%, rgba(255,167,51,0.08) 0%, transparent 60%)',
-                'radial-gradient(ellipse at 30% 50%, rgba(255,122,0,0.12) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(255,167,51,0.08) 0%, transparent 60%)',
+                'radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.2) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(124,58,237,0.16) 0%, transparent 60%)',
+                'radial-gradient(ellipse at 70% 50%, rgba(6,182,212,0.2) 0%, transparent 60%), radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.16) 0%, transparent 60%)',
+                'radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.2) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(124,58,237,0.16) 0%, transparent 60%)',
               ],
             }}
             transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}

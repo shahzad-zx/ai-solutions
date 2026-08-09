@@ -8,23 +8,25 @@ import {
 import VisionSection from "./VisionSection";
 import WorkExplorations from "./WorkExplorations";
 import DesignInMotion from "./DesignInMotion";
+import MovingGradientBackground from "../components/effects/MovingGradientBackground";
+import IndustryCards from "../components/sections/IndustryCards";
 
 /* ============================================================
    DESIGN TOKENS — Light Mode with Soft Blue Accents
    ============================================================ */
 const T = {
-  bg: "#FFFFFF",
-  bg2: "#F0F7FF",
-  card: "rgba(255, 255, 255, 0.85)",
-  border: "rgba(203, 221, 243, 0.6)",
-  accent: "#2563EB",       // Deep blue for primary actions/contrast
-  accent2: "#3B82F6",      // Primary blue accent
-  highlight: "#0284C7",    // Accent highlight blue
-  softBlue: "#E0F2FE",     // Light blue background for cards/badges
-  glow: "rgba(59, 130, 246, 0.25)",
-  text: "#0F172A",         // Dark navy for high contrast readability
-  text2: "#334155",        // Slate text for secondary details
-  muted: "#64748B",        // Subtitle muted text
+  bg: "#070B14",
+  bg2: "#0F172A",
+  card: "rgba(15, 23, 42, 0.75)",
+  border: "rgba(99, 102, 241, 0.25)",
+  accent: "#4F46E5",       // Electric indigo
+  accent2: "#38BDF8",      // Sky cyan accent
+  highlight: "#C084FC",    // Cyber purple
+  softBlue: "rgba(30, 41, 59, 0.7)",
+  glow: "rgba(99, 102, 241, 0.4)",
+  text: "#F8FAFC",         // Crisp white text
+  text2: "#CBD5E1",        // Soft slate text
+  muted: "#94A3B8",        // Muted details text
   success: "#10B981",
 };
 
@@ -52,29 +54,41 @@ function GlobalStyles() {
         background:var(--accent2); pointer-events:none; z-index:9999; transform:translate(-50%,-50%);
         transition:opacity .2s; }
       .ar-cursor-ring{ position:fixed; top:0; left:0; width:32px; height:32px; border-radius:50%;
-        border:1px solid rgba(59,130,246,0.5); pointer-events:none; z-index:9998; transform:translate(-50%,-50%);
+        border:1px solid rgba(56,189,248,0.6); pointer-events:none; z-index:9998; transform:translate(-50%,-50%);
         transition:width .25s,height .25s,border-color .25s,background .25s; }
-      .ar-cursor-ring.hover{ width:56px; height:56px; background:rgba(224,242,254,0.5); border-color:var(--accent2); }
+      .ar-cursor-ring.hover{ width:56px; height:56px; background:rgba(56,189,248,0.15); border-color:var(--accent2); }
 
-      .ar-glass{ background:var(--card); border:1px solid var(--border); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); box-shadow: 0 10px 30px -10px rgba(186, 216, 255, 0.3); }
+      .ar-glass{ 
+        background:var(--card); 
+        border:1px solid var(--border); 
+        backdrop-filter:blur(20px); 
+        -webkit-backdrop-filter:blur(20px); 
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease; 
+      }
+      .ar-glass:hover {
+        border-color: rgba(168, 85, 247, 0.5);
+        box-shadow: 0 15px 40px -10px rgba(168, 85, 247, 0.3);
+      }
 
       @keyframes ar-drift{ 0%{ transform:translate(0,0) scale(1);} 50%{ transform:translate(3%,-4%) scale(1.08);} 100%{ transform:translate(0,0) scale(1);} }
       @keyframes ar-drift-2{ 0%{ transform:translate(0,0) scale(1);} 50%{ transform:translate(-4%,3%) scale(1.05);} 100%{ transform:translate(0,0) scale(1);} }
       @keyframes ar-grid-move{ 0%{ background-position:0 0;} 100%{ background-position:80px 80px;} }
       @keyframes ar-float{ 0%,100%{ transform:translateY(0) rotate(var(--r,0deg)); } 50%{ transform:translateY(-14px) rotate(var(--r,0deg)); } }
       @keyframes ar-float-slow{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-8px); } }
-      @keyframes ar-pulse-ring{ 0%{ box-shadow:0 0 0 0 rgba(59,130,246,0.4);} 70%{ box-shadow:0 0 0 14px rgba(59,130,246,0);} 100%{ box-shadow:0 0 0 0 rgba(59,130,246,0);} }
+      @keyframes ar-pulse-ring{ 0%{ box-shadow:0 0 0 0 rgba(56,189,248,0.5);} 70%{ box-shadow:0 0 0 18px rgba(56,189,248,0);} 100%{ box-shadow:0 0 0 0 rgba(56,189,248,0);} }
       @keyframes ar-marquee{ 0%{ transform:translateX(0);} 100%{ transform:translateX(-50%);} }
       @keyframes ar-marquee-rev{ 0%{ transform:translateX(-50%);} 100%{ transform:translateX(0);} }
       @keyframes ar-blink{ 0%,100%{ opacity:1;} 50%{ opacity:.2;} }
       @keyframes ar-fadeUp{ from{ opacity:0; transform:translateY(28px);} to{ opacity:1; transform:translateY(0);} }
       @keyframes ar-bar{ 0%,100%{ transform:scaleY(.3);} 50%{ transform:scaleY(1);} }
+      @keyframes ar-gradient-shift{ 0%{ background-position:0% 50%;} 50%{ background-position:100% 50%;} 100%{ background-position:0% 50%;} }
 
-      .ar-noise{ position:absolute; inset:0; opacity:0.015; pointer-events:none; mix-blend-mode:multiply;
+      .ar-noise{ position:absolute; inset:0; opacity:0.02; pointer-events:none; mix-blend-mode:overlay;
         background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
-      .ar-grid-bg{ position:absolute; inset:-10%; opacity:0.6;
-        background-image:linear-gradient(rgba(186, 216, 255, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(186, 216, 255, 0.3) 1px, transparent 1px);
+      .ar-grid-bg{ position:absolute; inset:-10%; opacity:0.35;
+        background-image:linear-gradient(rgba(129, 140, 248, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(129, 140, 248, 0.15) 1px, transparent 1px);
         background-size:80px 80px; animation:ar-grid-move 14s linear infinite;
         -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 20%, #000 40%, transparent 85%);
         mask-image:radial-gradient(ellipse 70% 60% at 50% 20%, #000 40%, transparent 85%); }
@@ -82,19 +96,25 @@ function GlobalStyles() {
       .ar-reveal{ opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
       .ar-reveal.in{ opacity:1; transform:translateY(0); }
 
-      .ar-btn-primary{ background:linear-gradient(180deg, var(--accent2), var(--accent)); color:#fff; position:relative; overflow:hidden;
-        box-shadow:0 8px 25px -6px var(--glow); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
-      .ar-btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 30px -4px var(--glow); }
-      .ar-btn-ghost{ background:var(--softBlue); border:1px solid var(--border); color:var(--text); transition:all .3s; }
-      .ar-btn-ghost:hover{ background:#D0E7FF; border-color:rgba(59,130,246,0.3); }
+      .ar-btn-primary{ 
+        background: linear-gradient(135deg, #38BDF8, #818CF8, #C084FC, #F472B6, #38BDF8);
+        background-size: 300% 300%;
+        animation: ar-gradient-shift 6s ease infinite;
+        color: #070B14; font-weight: 700; position: relative; overflow: hidden;
+        box-shadow: 0 8px 30px -4px rgba(56, 189, 248, 0.5); 
+        transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; 
+      }
+      .ar-btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 40px -4px rgba(192, 132, 252, 0.6); }
+      .ar-btn-ghost{ background:rgba(30, 41, 59, 0.7); border:1px solid rgba(99, 102, 241, 0.3); color:#F8FAFC; transition:all .3s; }
+      .ar-btn-ghost:hover{ background:rgba(51, 65, 85, 0.9); border-color:rgba(56,189,248,0.5); }
 
-      .ar-ripple{ position:absolute; border-radius:50%; background:rgba(255,255,255,0.6); transform:scale(0); animation:ar-ripple-anim .6s ease-out; pointer-events:none; }
+      .ar-ripple{ position:absolute; border-radius:50%; background:rgba(255,255,255,0.4); transform:scale(0); animation:ar-ripple-anim .6s ease-out; pointer-events:none; }
       @keyframes ar-ripple-anim{ to{ transform:scale(3); opacity:0; } }
 
       .ar-card-tilt{ transition:transform .12s ease-out; transform-style:preserve-3d; will-change:transform; }
 
       .ar-shine::before{ content:''; position:absolute; top:0; left:-150%; width:60%; height:100%;
-        background:linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.4) 55%, transparent 100%);
+        background:linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.15) 45%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.15) 55%, transparent 100%);
         transform:skewX(-20deg); transition:left .8s cubic-bezier(.16,1,.3,1); pointer-events:none; }
       .ar-shine:hover::before{ left:150%; }
 
@@ -112,14 +132,21 @@ function GlobalStyles() {
 
       .ar-scrollbar-hide::-webkit-scrollbar{ display:none; }
 
-      .ar-gradient-text{ background:linear-gradient(120deg, #1D4ED8, #0284C7); -webkit-background-clip:text; background-clip:text; color:transparent; }
+      .ar-gradient-text{ 
+        background: linear-gradient(135deg, #38BDF8, #818CF8, #C084FC, #F472B6, #34D399, #38BDF8);
+        background-size: 300% 300%;
+        animation: ar-gradient-shift 8s ease infinite;
+        -webkit-background-clip: text; 
+        background-clip: text; 
+        color: transparent; 
+      }
 
       .ar-industry-card{ transition:transform .5s cubic-bezier(.16,1,.3,1); }
       .ar-industry-img{ transition:transform 1.1s cubic-bezier(.16,1,.3,1), filter .5s; }
       .ar-industry-card:hover .ar-industry-img{ transform:scale(1.12); }
       .ar-industry-card:hover{ transform:translateY(-6px); }
 
-      .ar-progress-bar{ position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg, var(--accent2), var(--highlight)); z-index:60; transition:width .1s linear; }
+      .ar-progress-bar{ position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg, #38BDF8, #818CF8, #C084FC, #F472B6); z-index:60; transition:width .1s linear; }
 
       input::placeholder{ color:var(--muted); }
     `}</style>
@@ -264,9 +291,7 @@ function LivingBackground() {
   const particles = Array.from({ length: 22 });
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden" style={{ background: "var(--bg)" }}>
-      <div className="absolute -top-40 -left-20 w-[600px] h-[600px] rounded-full" style={{ background: "radial-gradient(circle, rgba(186, 216, 255, 0.45), transparent 70%)", filter: "blur(50px)", animation: "ar-drift 18s ease-in-out infinite" }} />
-      <div className="absolute top-1/3 -right-32 w-[650px] h-[650px] rounded-full" style={{ background: "radial-gradient(circle, rgba(224, 242, 254, 0.6), transparent 70%)", filter: "blur(60px)", animation: "ar-drift-2 22s ease-in-out infinite" }} />
-      <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] rounded-full" style={{ background: "radial-gradient(circle, rgba(186, 216, 255, 0.35), transparent 70%)", filter: "blur(50px)", animation: "ar-drift 26s ease-in-out infinite" }} />
+      <MovingGradientBackground />
       <div className="ar-grid-bg" />
       {particles.map((_, i) => {
         const size = 3 + (i % 4);
@@ -276,8 +301,8 @@ function LivingBackground() {
         return (
           <div key={i} className="absolute rounded-full" style={{
             left: `${left}%`, top: `${top}%`, width: size, height: size,
-            background: i % 2 === 0 ? "var(--accent2)" : "var(--highlight)",
-            opacity: 0.25, animation: `ar-float-slow ${dur}s ease-in-out infinite`, animationDelay: `${i * 0.4}s`,
+            background: i % 3 === 0 ? "#7C3AED" : i % 2 === 0 ? "var(--accent2)" : "var(--highlight)",
+            opacity: 0.35, animation: `ar-float-slow ${dur}s ease-in-out infinite`, animationDelay: `${i * 0.4}s`,
           }} />
         );
       })}
@@ -400,14 +425,14 @@ function HeroDashboard() {
           <WaveformRibbon />
         </div>
         <div className="grid grid-cols-2 gap-3 flex-1">
-          <div className="rounded-2xl p-3 flex flex-col justify-between" style={{ background: "#F8FAFC", border: "1px solid var(--border)" }}>
+          <div className="rounded-2xl p-3 flex flex-col justify-between" style={{ background: "rgba(30, 41, 59, 0.7)", border: "1px solid var(--border)" }}>
             <TrendingUp size={16} color="var(--success)" />
             <div>
               <div className="text-lg font-bold" style={{ color: "var(--text)" }}>$18,420</div>
               <div className="text-[10px]" style={{ color: "var(--muted)" }}>Booked revenue</div>
             </div>
           </div>
-          <div className="rounded-2xl p-3 flex flex-col justify-between" style={{ background: "#F8FAFC", border: "1px solid var(--border)" }}>
+          <div className="rounded-2xl p-3 flex flex-col justify-between" style={{ background: "rgba(30, 41, 59, 0.7)", border: "1px solid var(--border)" }}>
             <BarChart3 size={16} color="var(--accent2)" />
             <div>
               <div className="text-lg font-bold" style={{ color: "var(--text)" }}>96%</div>
@@ -415,7 +440,7 @@ function HeroDashboard() {
             </div>
           </div>
         </div>
-        <div className="rounded-2xl p-3 flex items-center justify-between" style={{ background: "#F8FAFC", border: "1px solid var(--border)" }}>
+        <div className="rounded-2xl p-3 flex items-center justify-between" style={{ background: "rgba(30, 41, 59, 0.7)", border: "1px solid var(--border)" }}>
           <div className="flex items-center gap-2">
             <Calendar size={14} color="var(--accent2)" />
             <span className="text-xs font-medium" style={{ color: "var(--text2)" }}>Thu, 2:30 PM — Color + Cut</span>
@@ -539,17 +564,74 @@ function Reveal({ children, delay = 0, className = "" }) {
 /* ============================================================
    FEATURE BENTO
    ============================================================ */
-function FeatureCard({ icon, title, desc, big, delay }) {
-  const tilt = useTilt(5);
+function FeatureCard({ icon, title, desc, details = [], big, delay }) {
+  const [flipped, setFlipped] = useState(false);
   return (
     <Reveal delay={delay} className={big ? "md:col-span-2" : ""}>
-      <div ref={tilt.ref} onMouseMove={tilt.onMouseMove} onMouseLeave={tilt.onMouseLeave}
-        className="ar-glass ar-card-tilt ar-shine rounded-2xl p-6 h-full relative group" data-hover>
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6" style={{ background: "var(--softBlue)" }}>
-          {icon}
+      <div 
+        className="relative perspective-[1000px] w-full h-[220px] group cursor-pointer"
+        onMouseEnter={() => setFlipped(true)}
+        onMouseLeave={() => setFlipped(false)}
+        onClick={() => setFlipped(!flipped)}
+      >
+        <div 
+          className="w-full h-full relative transition-transform duration-700 ease-out"
+          style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+        >
+          {/* FRONT FACE */}
+          <div 
+            className="ar-glass rounded-2xl p-6 h-full flex flex-col justify-between absolute inset-0 border border-indigo-500/30 group-hover:border-sky-400/60"
+            style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110" style={{ background: "var(--softBlue)" }}>
+                {icon}
+              </div>
+              <span className="text-[11px] font-medium text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded-full border border-slate-700/60 group-hover:text-sky-300 transition-colors">
+                Hover to flip 🔄
+              </span>
+            </div>
+            <div>
+              <h3 className="ar-heading font-semibold text-base mb-1.5" style={{ color: "var(--text)" }}>{title}</h3>
+              <p className="text-sm leading-relaxed line-clamp-3" style={{ color: "var(--text2)" }}>{desc}</p>
+            </div>
+          </div>
+
+          {/* BACK FACE */}
+          <div 
+            className="ar-glass rounded-2xl p-6 h-full flex flex-col justify-between absolute inset-0 border border-sky-400/70"
+            style={{ 
+              backfaceVisibility: 'hidden', 
+              WebkitBackfaceVisibility: 'hidden', 
+              transform: 'rotateY(180deg)',
+              background: "linear-gradient(135deg, rgba(30, 27, 75, 0.95), rgba(15, 23, 42, 0.95))" 
+            }}
+          >
+            <div>
+              <div className="flex items-center justify-between border-b border-indigo-500/30 pb-2 mb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-sky-300">{title}</span>
+                <span className="text-[10px] text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-500/40">Active</span>
+              </div>
+              <div className="space-y-2 text-xs text-slate-200">
+                {details.length > 0 ? details.map((d, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <span className="text-emerald-400 font-bold">✓</span> {d}
+                  </div>
+                )) : (
+                  <>
+                    <div className="flex items-center gap-2"><span className="text-emerald-400 font-bold">✓</span> 24/7 intelligent voice response</div>
+                    <div className="flex items-center gap-2"><span className="text-emerald-400 font-bold">✓</span> Real-time calendar synchronization</div>
+                    <div className="flex items-center gap-2"><span className="text-emerald-400 font-bold">✓</span> Automated CRM & notifications</div>
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="pt-2 border-t border-indigo-500/30 text-[11px] font-semibold text-sky-300 flex justify-between items-center">
+              <span>Response: &lt; 300ms</span>
+              <span>Interactive 3D</span>
+            </div>
+          </div>
         </div>
-        <h3 className="ar-heading font-semibold text-base mb-1.5" style={{ color: "var(--text)" }}>{title}</h3>
-        <p className="text-sm leading-relaxed" style={{ color: "var(--text2)" }}>{desc}</p>
       </div>
     </Reveal>
   );
@@ -557,18 +639,54 @@ function FeatureCard({ icon, title, desc, big, delay }) {
 
 function FeatureBento() {
   const items = [
-    { icon: <Phone size={18} color="var(--accent2)" />, title: "AI phone calls", desc: "Answers every call in a natural voice, day or night, in seconds — not on hold.", big: true },
-    { icon: <Calendar size={18} color="var(--accent2)" />, title: "Appointment booking", desc: "Books directly into your live calendar, no double-bookings." },
-    { icon: <BarChart3 size={18} color="var(--accent2)" />, title: "Analytics", desc: "See call volume, booking rate, and revenue at a glance." },
-    { icon: <Users size={18} color="var(--accent2)" />, title: "Built-in CRM", desc: "Every caller becomes a saved customer profile automatically." },
-    { icon: <Mic size={18} color="var(--accent2)" />, title: "Voice AI engine", desc: "Understands accents, interruptions, and follow-up questions." },
-    { icon: <MessageSquare size={18} color="var(--accent2)" />, title: "WhatsApp & SMS", desc: "Confirms and reminds customers on the channels they check." },
-    { icon: <Mail size={18} color="var(--accent2)" />, title: "Email digests", desc: "A daily summary of calls, bookings, and revenue in your inbox." },
+    { 
+      icon: <Phone size={18} color="var(--accent2)" />, 
+      title: "AI phone calls", 
+      desc: "Answers every call in a natural voice, day or night, in seconds — not on hold.", 
+      big: true,
+      details: ["Natural voice acoustic model", "Handles interruptions & filler words", "Custom voice persona & accents"]
+    },
+    { 
+      icon: <Calendar size={18} color="var(--accent2)" />, 
+      title: "Appointment booking", 
+      desc: "Books directly into your live calendar, no double-bookings.",
+      details: ["Google, Outlook & Apple Calendar sync", "Live slot availability check", "Zero double-booking guarantee"]
+    },
+    { 
+      icon: <BarChart3 size={18} color="var(--accent2)" />, 
+      title: "Analytics", 
+      desc: "See call volume, booking rate, and revenue at a glance.",
+      details: ["Call volume heatmaps & trends", "Booking conversion rate tracking", "Exportable PDF/CSV reports"]
+    },
+    { 
+      icon: <Users size={18} color="var(--accent2)" />, 
+      title: "Built-in CRM", 
+      desc: "Every caller becomes a saved customer profile automatically.",
+      details: ["Auto contact creation", "Past caller history & notes", "Custom tagging & preferences"]
+    },
+    { 
+      icon: <Mic size={18} color="var(--accent2)" />, 
+      title: "Voice AI engine", 
+      desc: "Understands accents, interruptions, and follow-up questions.",
+      details: ["Real-time intent extraction", "Multi-language & accent support", "Sub-300ms response latency"]
+    },
+    { 
+      icon: <MessageSquare size={18} color="var(--accent2)" />, 
+      title: "WhatsApp & SMS", 
+      desc: "Confirms and reminds customers on the channels they check.",
+      details: ["Automated WhatsApp confirmation", "SMS reminder dispatch", "Reduces no-shows by 85%"]
+    },
+    { 
+      icon: <Mail size={18} color="var(--accent2)" />, 
+      title: "Email digests", 
+      desc: "A daily summary of calls, bookings, and revenue in your inbox.",
+      details: ["Automated daily staff digests", "Branded customer confirmations", "Customizable email templates"]
+    },
   ];
   return (
     <section className="py-28 px-6 md:px-10">
       <div className="mx-auto max-w-7xl">
-        <SectionHeading eyebrow="Product" title="One employee, every channel." desc="ReceptioAI runs your front desk end to end — no missed calls, no double bookings, no late-night hold music." />
+        <SectionHeading eyebrow="Product" title="One employee, every channel." desc="Hover or tap any card below to flip it and see how ReceptioAI runs your front desk." />
         <div className="grid md:grid-cols-3 gap-4 mt-14">
           {items.map((it, i) => <FeatureCard key={it.title} {...it} delay={i * 80} />)}
         </div>
@@ -608,7 +726,7 @@ function HowItWorks() {
             {steps.map((s, i) => (
               <Reveal key={s.title} delay={i * 120}>
                 <div className="flex md:flex-col items-center md:items-start gap-4 md:gap-0">
-                  <div className="w-16 h-16 rounded-2xl ar-glass flex items-center justify-center mb-0 md:mb-5 relative z-10 shrink-0" style={{ color: "var(--accent2)", background: "#FFFFFF" }}>
+                  <div className="w-16 h-16 rounded-2xl ar-glass flex items-center justify-center mb-0 md:mb-5 relative z-10 shrink-0" style={{ color: "var(--accent2)", background: "rgba(15, 23, 42, 0.85)" }}>
                     {s.icon}
                   </div>
                   <div>
@@ -630,34 +748,7 @@ function HowItWorks() {
    INDUSTRIES
    ============================================================ */
 function Industries() {
-  const list = [
-    { name: "Hair Salon", icon: <Scissors size={18} />, hue: 205 },
-    { name: "Dental Clinic", icon: <Stethoscope size={18} />, hue: 200 },
-    { name: "Restaurant", icon: <UtensilsCrossed size={18} />, hue: 215 },
-    { name: "Hotel", icon: <Building2 size={18} />, hue: 210 },
-    { name: "Gym", icon: <Dumbbell size={18} />, hue: 198 },
-    { name: "Spa", icon: <Waves size={18} />, hue: 208 },
-    { name: "Lawyer", icon: <Gavel size={18} />, hue: 220 },
-    { name: "Repair Shop", icon: <Wrench size={18} />, hue: 203 },
-  ];
-  return (
-    <section className="py-28 px-6 md:px-10">
-      <div className="mx-auto max-w-7xl">
-        <SectionHeading eyebrow="Industries" title="Built for every front desk." desc="From the first ring to the final booking, tuned to how your industry actually talks." />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14">
-          {list.map((it, i) => (
-            <Reveal key={it.name} delay={i * 60}>
-              <div className="ar-industry-card ar-glass rounded-2xl p-6 h-40 relative overflow-hidden flex flex-col justify-between cursor-none" data-hover>
-                <div className="ar-industry-img absolute inset-0" style={{ background: `radial-gradient(circle at 70% 20%, rgba(224,242,254,0.8), transparent 60%)` }} />
-                <div className="relative w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "var(--softBlue)", color: "var(--accent2)" }}>{it.icon}</div>
-                <span className="relative ar-heading font-semibold text-sm" style={{ color: "var(--text)" }}>{it.name}</span>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return <IndustryCards />;
 }
 
 /* ============================================================
@@ -691,13 +782,13 @@ function VoiceAI() {
           <p className="text-base md:text-lg mb-8" style={{ color: "var(--text2)" }}>
             Natural pacing, real interruption handling, and instant answers to your most common questions — customers rarely realize it's AI.
           </p>
-          <div className="ar-glass rounded-2xl p-5 space-y-3 ar-mono text-[13px]" style={{ background: "#FFFFFF" }}>
+          <div className="ar-glass rounded-2xl p-5 space-y-3 ar-mono text-[13px]" style={{ background: "rgba(15, 23, 42, 0.85)" }}>
             <div className="flex gap-2"><span className="font-semibold" style={{ color: "var(--muted)" }}>Caller</span><span style={{ color: "var(--text2)" }}>Do you have anything open Thursday afternoon?</span></div>
             <div className="flex gap-2"><span className="font-semibold" style={{ color: "var(--accent2)" }}>AI</span><span style={{ color: "var(--text)" }}><TypingLine text="Yes — I have 2:30 or 4:00 PM open Thursday. Which works?" active={inView} /></span></div>
           </div>
         </Reveal>
         <Reveal delay={150}>
-          <div className="ar-glass rounded-3xl p-8 flex flex-col items-center gap-8" style={{ background: "#FFFFFF" }}>
+          <div className="ar-glass rounded-3xl p-8 flex flex-col items-center gap-8" style={{ background: "rgba(15, 23, 42, 0.85)" }}>
             <div className="relative w-24 h-24 flex items-center justify-center rounded-full" style={{ background: "var(--softBlue)" }}>
               <div className="absolute inset-0 rounded-full" style={{ animation: "ar-pulse-ring 2s infinite" }} />
               <Mic size={30} color="var(--accent2)" />
@@ -745,14 +836,14 @@ function DashboardShowcase() {
               ].map((s) => <StatTile key={s.label} {...s} />)}
             </div>
             <div className="grid md:grid-cols-3 gap-4">
-              <div className="md:col-span-2 rounded-2xl p-5" style={{ background: "#F8FAFC", border: "1px solid var(--border)" }}>
+              <div className="md:col-span-2 rounded-2xl p-5" style={{ background: "rgba(30, 41, 59, 0.7)", border: "1px solid var(--border)" }}>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-sm font-semibold" style={{ color: "var(--text)" }}>Call volume</span>
                   <span className="text-[11px]" style={{ color: "var(--muted)" }}>Last 7 days</span>
                 </div>
                 <MiniBarChart />
               </div>
-              <div className="rounded-2xl p-5 space-y-3" style={{ background: "#F8FAFC", border: "1px solid var(--border)" }}>
+              <div className="rounded-2xl p-5 space-y-3" style={{ background: "rgba(30, 41, 59, 0.7)", border: "1px solid var(--border)" }}>
                 <span className="text-sm font-semibold" style={{ color: "var(--text)" }}>Live activity</span>
                 {["Booked · Nail Studio", "Confirmed · Dr. Rao Clinic", "Rescheduled · Casa Bella"].map((t, i) => (
                   <div key={t} className="flex items-center gap-2 text-[12px]" style={{ color: "var(--text2)", opacity: 0, animation: `ar-fadeUp .6s ease-out forwards`, animationDelay: `${0.3 + i * 0.2}s` }}>
@@ -772,7 +863,7 @@ function StatTile({ label, val, prefix = "", suffix = "", icon }) {
   const [ref, inView] = useInView(0.4);
   const n = useCountUp(val, inView);
   return (
-    <div ref={ref} className="rounded-2xl p-4" style={{ background: "#F8FAFC", border: "1px solid var(--border)" }}>
+    <div ref={ref} className="rounded-2xl p-4" style={{ background: "rgba(30, 41, 59, 0.7)", border: "1px solid var(--border)" }}>
       <div className="flex items-center gap-2 mb-2" style={{ color: "var(--accent2)" }}>{icon}<span className="text-[11px] font-medium" style={{ color: "var(--muted)" }}>{label}</span></div>
       <div className="ar-heading font-bold text-2xl" style={{ color: "var(--text)" }}>{prefix}{n.toLocaleString()}{suffix}</div>
     </div>
@@ -813,7 +904,7 @@ function Testimonials() {
       <div className="ar-marquee-wrap ar-scrollbar-hide overflow-hidden">
         <div className="ar-marquee-track rev" style={{ animationDuration: "50s" }}>
           {row.map((q, i) => (
-            <div key={i} className="ar-glass rounded-2xl p-6 mx-3 w-[340px] shrink-0" style={{ background: "#FFFFFF" }}>
+            <div key={i} className="ar-glass rounded-2xl p-6 mx-3 w-[340px] shrink-0" style={{ background: "rgba(15, 23, 42, 0.85)" }}>
               <div className="flex gap-1 mb-3">{[0, 1, 2, 3, 4].map(j => <Star key={j} size={12} fill="#F59E0B" color="#F59E0B" />)}</div>
               <p className="text-sm mb-5 leading-relaxed font-normal" style={{ color: "var(--text2)" }}>&ldquo;{q.text}&rdquo;</p>
               <div className="flex items-center gap-3">
@@ -845,8 +936,8 @@ function PricingPreview() {
           {plans.map((p, i) => (
             <Reveal key={p.name} delay={i * 100}>
               <div className="ar-glass ar-shine rounded-3xl p-7 h-full flex flex-col relative transition-transform duration-500 hover:-translate-y-2"
-                style={{ background: "#FFFFFF", border: p.popular ? "2px solid var(--accent2)" : undefined, boxShadow: p.popular ? "0 20px 40px -10px var(--glow)" : undefined }} data-hover>
-                {p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[11px] px-3 py-1 rounded-full font-bold uppercase tracking-wider" style={{ background: "var(--accent2)", color: "#FFFFFF" }}>Most popular</span>}
+                style={{ background: "rgba(15, 23, 42, 0.85)", border: p.popular ? "2px solid var(--accent2)" : undefined, boxShadow: p.popular ? "0 20px 40px -10px rgba(56, 189, 248, 0.3)" : undefined }} data-hover>
+                {p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[11px] px-3 py-1 rounded-full font-bold uppercase tracking-wider text-slate-900" style={{ background: "var(--accent2)" }}>Most popular</span>}
                 <h3 className="ar-heading font-bold text-lg mb-1" style={{ color: "var(--text)" }}>{p.name}</h3>
                 <p className="text-xs mb-5" style={{ color: "var(--muted)" }}>{p.desc}</p>
                 <div className="mb-6"><span className="ar-heading font-extrabold text-4xl" style={{ color: "var(--text)" }}>{p.price}</span>{p.price !== "Custom" && <span className="text-sm font-medium" style={{ color: "var(--muted)" }}>/mo</span>}</div>
@@ -883,7 +974,7 @@ function FAQ() {
             const isOpen = openIdx === i;
             return (
               <Reveal key={it.q} delay={i * 60}>
-                <div className="ar-glass rounded-2xl overflow-hidden" style={{ background: "#FFFFFF" }}>
+                <div className="ar-glass rounded-2xl overflow-hidden" style={{ background: "rgba(15, 23, 42, 0.85)" }}>
                   <button className="w-full flex items-center justify-between px-6 py-5 text-left" onClick={() => setOpenIdx(isOpen ? -1 : i)} data-hover>
                     <span className="font-semibold text-sm md:text-base" style={{ color: "var(--text)" }}>{it.q}</span>
                     <ChevronDown size={16} style={{ color: "var(--accent2)", transition: "transform .4s cubic-bezier(.16,1,.3,1)", transform: isOpen ? "rotate(180deg)" : "rotate(0)" }} />
@@ -910,14 +1001,13 @@ function FinalCTA() {
   return (
     <section className="px-6 md:px-10 pb-6">
       <Reveal>
-        <div className="mx-auto max-w-6xl rounded-[32px] p-14 md:p-20 text-center relative overflow-hidden"
-          style={{ background: "linear-gradient(135deg, #E0F2FE, #F0F7FF)", border: "1px solid var(--border)" }}>
-          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full" style={{ background: "radial-gradient(circle, rgba(186, 216, 255, 0.5), transparent 70%)", filter: "blur(30px)", animation: "ar-drift 16s ease-in-out infinite" }} />
-          <h2 className="ar-heading font-extrabold text-3xl md:text-[48px] leading-tight mb-6 relative" style={{ color: "var(--text)" }}>Ready to never miss<br />another customer?</h2>
-          <p className="mb-10 relative text-base md:text-lg font-normal" style={{ color: "var(--text2)" }}>Set up your AI receptionist in under 15 minutes. No credit card required.</p>
+        <div className="mx-auto max-w-6xl rounded-[32px] p-14 md:p-20 text-center relative overflow-hidden moving-gradient-bg border border-indigo-500/30 shadow-2xl">
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full" style={{ background: "radial-gradient(circle, rgba(168, 85, 247, 0.35), transparent 70%)", filter: "blur(50px)", animation: "ar-drift 16s ease-in-out infinite" }} />
+          <h2 className="ar-heading font-extrabold text-3xl md:text-[48px] leading-tight mb-6 relative" style={{ color: "#F8FAFC" }}>Ready to never miss<br />another <span className="ar-gradient-text">customer call</span>?</h2>
+          <p className="mb-10 relative text-base md:text-lg font-normal max-w-xl mx-auto" style={{ color: "#CBD5E1" }}>Set up your AI receptionist in under 15 minutes. No credit card required.</p>
           <div className="flex flex-wrap justify-center gap-4 relative">
-            <Ripple className="ar-btn-primary rounded-xl px-7 py-4 font-semibold text-sm flex items-center gap-2">
-              <span data-hover className="flex items-center gap-2">Start Free Trial <ArrowRight size={15} /></span>
+            <Ripple className="ar-btn-primary rounded-xl px-7 py-4 font-semibold text-sm flex items-center gap-2 shadow-lg">
+              <span data-hover className="flex items-center gap-2 text-slate-950 font-bold">Start Free Trial <ArrowRight size={15} /></span>
             </Ripple>
             <Ripple className="ar-btn-ghost rounded-xl px-7 py-4 font-semibold text-sm"><span data-hover>Book a Demo</span></Ripple>
           </div>
@@ -941,13 +1031,13 @@ function Footer() {
       <div className="mx-auto max-w-7xl grid md:grid-cols-5 gap-10">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, var(--accent2), var(--accent))" }}><Phone size={16} color="#fff" /></div>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, var(--accent2), var(--accent))" }}><Phone size={16} color="#070B14" /></div>
             <span className="ar-heading font-bold text-base" style={{ color: "var(--text)" }}>Receptio<span style={{ color: "var(--accent2)" }}>AI</span></span>
           </div>
           <p className="text-sm max-w-xs mb-6" style={{ color: "var(--text2)" }}>Your 24/7 AI employee that never misses a customer.</p>
           <div className="flex gap-2 max-w-xs">
-            <input placeholder="you@business.com" className="flex-1 rounded-lg px-3 py-2 text-sm ar-glass outline-none" style={{ color: "var(--text)", background: "#FFFFFF" }} />
-            <Ripple className="ar-btn-primary rounded-lg px-4 text-sm font-medium">Join</Ripple>
+            <input placeholder="you@business.com" className="flex-1 rounded-lg px-3 py-2 text-sm ar-glass outline-none" style={{ color: "var(--text)", background: "rgba(15, 23, 42, 0.85)" }} />
+            <Ripple className="ar-btn-primary rounded-lg px-4 text-sm font-medium text-slate-950">Join</Ripple>
           </div>
         </div>
         {cols.map(c => (
