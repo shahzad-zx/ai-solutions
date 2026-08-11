@@ -7,8 +7,8 @@ export default function FloatingBlobs() {
       <motion.div
         className="absolute -top-[300px] -right-[300px] w-[800px] h-[800px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(56,189,248,0.35) 0%, rgba(168,85,247,0.2) 50%, transparent 70%)',
-          filter: 'blur(90px)',
+          background: 'radial-gradient(circle, rgba(255,122,0,0.12) 0%, transparent 70%)',
+          filter: 'blur(80px)',
         }}
         animate={{
           x: [0, 50, -30, 0],
@@ -24,10 +24,10 @@ export default function FloatingBlobs() {
 
       {/* Secondary blob */}
       <motion.div
-        className="absolute top-[40%] -left-[200px] w-[650px] h-[650px] rounded-full"
+        className="absolute top-[40%] -left-[200px] w-[600px] h-[600px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(168,85,247,0.3) 0%, rgba(236,72,153,0.2) 50%, transparent 70%)',
-          filter: 'blur(90px)',
+          background: 'radial-gradient(circle, rgba(255,167,51,0.08) 0%, transparent 70%)',
+          filter: 'blur(80px)',
         }}
         animate={{
           x: [0, 30, -20, 0],
@@ -43,10 +43,10 @@ export default function FloatingBlobs() {
 
       {/* Bottom accent blob */}
       <motion.div
-        className="absolute -bottom-[200px] right-[20%] w-[550px] h-[550px] rounded-full"
+        className="absolute -bottom-[200px] right-[20%] w-[500px] h-[500px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(6,182,212,0.3) 0%, rgba(16,185,129,0.2) 50%, transparent 70%)',
-          filter: 'blur(90px)',
+          background: 'radial-gradient(circle, rgba(255,213,128,0.06) 0%, transparent 70%)',
+          filter: 'blur(80px)',
         }}
         animate={{
           x: [0, -40, 20, 0],
