@@ -3,11 +3,17 @@ import {
   Phone, Calendar, TrendingUp, BarChart3, Mic, Bell, MessageSquare, Mail,
   Clock, CheckCircle2, ArrowRight, Star, ChevronDown, Menu, X, Sparkles,
   Scissors, UtensilsCrossed, Building2, Dumbbell, Stethoscope, Gavel,
-  Wrench, Car, Home as HomeIcon, Waves, MapPin, Users, ShieldCheck,
+  Users,
+  Waves,
+  Wrench,
+  ShieldCheck,
+  MapPin,
 } from "lucide-react";
 import VisionSection from "./VisionSection";
 import WorkExplorations from "./WorkExplorations";
 import DesignInMotion from "./DesignInMotion";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 
 /* ============================================================
    DESIGN TOKENS — Light Mode with Soft Blue Accents
@@ -316,10 +322,19 @@ function Navbar() {
             ))}
           </div>
           <div className="hidden md:flex items-center gap-3">
-            <a href="#" data-hover className="text-sm px-4 py-2 rounded-lg ar-btn-ghost font-medium">Sign in</a>
-            <Ripple className="ar-btn-primary text-sm font-medium px-4 py-2 rounded-lg" onClick={() => { }}>
-              <span data-hover>Start Free Trial</span>
-            </Ripple>
+            <SignedOut>
+              <Link to="/login" data-hover className="text-sm px-4 py-2 rounded-lg ar-btn-ghost font-medium cursor-pointer">
+                Sign in
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+            <Link to="/signup">
+              <Ripple className="ar-btn-primary text-sm font-medium px-4 py-2 rounded-lg">
+                <span data-hover>Start Free Trial</span>
+              </Ripple>
+            </Link>
           </div>
           <button className="md:hidden" onClick={() => setOpen((o) => !o)} data-hover>
             {open ? <X size={20} /> : <Menu size={20} />}
