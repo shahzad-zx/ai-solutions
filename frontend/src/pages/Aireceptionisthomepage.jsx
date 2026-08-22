@@ -12,7 +12,7 @@ import {
 import VisionSection from "./VisionSection";
 import WorkExplorations from "./WorkExplorations";
 import DesignInMotion from "./DesignInMotion";
-import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 
 /* ============================================================
@@ -305,6 +305,7 @@ function ScrollProgressBar({ progress }) {
 function Navbar() {
   const { dir, scrolled } = useScrollMeta();
   const [open, setOpen] = useState(false);
+  const { user } = useUser();
   const links = ["Product", "Industries", "How it works", "Pricing", "FAQ"];
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-500 ease-out ${dir === "down" && scrolled ? "-translate-y-full" : "translate-y-0"}`}>
@@ -328,7 +329,13 @@ function Navbar() {
               </Link>
             </SignedOut>
             <SignedIn>
-              <UserButton />
+              {user ? (
+                <Link to="/dashboard" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                  <img src={user.imageUrl} alt="Profile" className="w-8 h-8 rounded-full border border-gray-200 object-cover" />
+                </Link>
+              ) : (
+                <UserButton />
+              )}
             </SignedIn>
             <Link to="/signup">
               <Ripple className="ar-btn-primary text-sm font-medium px-4 py-2 rounded-lg">
